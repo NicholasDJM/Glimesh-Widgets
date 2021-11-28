@@ -4,6 +4,8 @@
 
 **Warning: This is script is in ALPHA, and comes with zero warranty. This script is very unstable at this point.**
 
+This project is not affiliated with Glimesh, Inc
+
 This Tampermonkey script is used to add widgets to channels on https://glimesh.tv. You need the Tampermonkey extension installed before installing this script. Head to https://tampermonkey.net to install. This script has only been tested on Tampermonkey, but might work on other userscript extensions.
 
 Currently has support for Twitter and Discord widgets. Twitter works out-of-the-box, you only need to connect your Twitter account to your Glimesh Account.

@@ -26,7 +26,9 @@ function log(text) {
 function createCard() {
 	let container = $(".container-fluid.container-stream");
 	let social = $(".container-fluid.container-stream #social-buttons");
-	let row = $(".container-fluid.container-stream > .row:nth-child(2) > .col-lg-9.layout-spacing");
+	let row = $(".container-fluid.container-stream > .row:nth-child(2)");
+	let newRow = $(`<div class="row widget-row"></div>`);
+	row.before(newRow);
 	if (container.length > 0 && social.length > 0) {
 		let foundTwitter = false,
 			createdTwitter = false,
@@ -76,7 +78,7 @@ function createCard() {
 				}
 				//console.dir(row);
 				setTimeout(()=>{
-					row.after(column);
+					newRow.append(column);
 					column.append(card);
 					card.append(content);
 					console.dir(widget);
@@ -85,7 +87,7 @@ function createCard() {
 						let script = $("<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>");
 						widget.after(script);
 					}
-					log("Widget Appended");
+					log("Widget Appended: " +type);
 				}, 1000);
 				//console.dir(row);
 			};
@@ -96,7 +98,6 @@ function createCard() {
 				log("Found Twitter Link: "+twitterLink);
 				foundTwitter=true;
 				card("twitter");
-				//
 			}
 			let discord = $(element).find("a[href*='discord.gg'");
 			if (( discord && discord.length > 0 && !foundDiscord)) {
@@ -123,13 +124,23 @@ $(()=> {
 	if (jQuery.fn.jquery != "3.6.0") {
 		throw new Error("We were expecting jQuery version 3.6.0");
 	}
-	createCard();
-	let settingsButton = $("a.dropdown-item:nth-child(6)");
-	console.dir(settingsButton);
-	let newButton = $(`<a href="#" class="dropdown-item" id="glimeshWidgetsSettingsButton">
-	<i class="fas fa-cog fa-fw"></i>
-	Widgets
-</a>`);
+	function timer() {
+		setInterval(()=>{
+			if ($(".widget-row").length === 0) {
+				log(".widget-row doesn't not exist, creating...");
+				createCard();
+			}
+		}, 1000);
+	}
+	timer();
+	let nav = $(".navbar-nav.d-lg-flex.align-items-lg-center .nav-item:first-child");
+	console.dir("Nav object:", nav);
+	let newButton = $(`<li class="nav-item">
+	<a id="glimeshWidgetsSettingsButton" class="nav-link" target="_blank" data-placement="bottom" data-original-title="Glimesh Widgets Settings" data-toggle="tooltip" style="cursor:pointer">
+		<i class="fas fa-cog fa-fw"></i>
+		<span class="d-lg-none">Glimesh Widgets Settings</span>
+	</a>
+</d>`);
 	// eslint-disable-next-line unicorn/consistent-function-scoping
 	const saveSettings = () => {
 		log("TODO: Save Settings");
@@ -157,7 +168,7 @@ $(()=> {
 			menu.remove();
 		}
 	};
-	settingsButton.after(newButton);
+	nav.before(newButton);
 	$("#glimeshWidgetsSettingsButton").click(handleMenu);
 	GM_registerMenuCommand("Settings", handleMenu);
 });
