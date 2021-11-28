@@ -127,7 +127,7 @@ $(()=> {
 	function timer() {
 		setInterval(()=>{
 			if ($(".widget-row").length === 0) {
-				log(".widget-row doesn't not exist, creating...");
+				log(".widget-row does not exist, creating...");
 				createCard();
 			}
 		}, 1000);
