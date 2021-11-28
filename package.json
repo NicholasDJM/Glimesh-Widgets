@@ -1,6 +1,6 @@
 {
 	"name": "glimesh-widgets",
-	"version": "0.0.1",
+	"version": "0.0.1-alpha",
 	"description": "Provides widgets for https://glimesh.tv on every profile that has the correct data.",
 	"private": true,
 	"author": "Nicholas Miller",

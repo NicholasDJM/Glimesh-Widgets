@@ -1,8 +1,8 @@
 # Glimesh Widgets
 
-[![WTFPL](https://img.shields.io/github/license/NicholasDJM/Glimesh-Widgets)](http://www.wtfpl.net/about/)
+[![WTFPL](https://img.shields.io/github/license/NicholasDJM/Glimesh-Widgets)](http://www.wtfpl.net/about/) [![Version](https://img.shields.io/github/package-json/v/NicholasDJM/Glimesh-Widgets)](http://github.com/NicholasDJM/Glimesh-Widgets/releases)
 
-**Warning: This is script is in ALPHA, and comes with zero warranty. This script is very unstable at this point, AND NOT BATTLE-TESTED.** If you’d like to help create this script, create a pull request.
+**Warning: This script is in ALPHA, and comes with zero warranty. This script is very unstable at this point, AND NOT BATTLE-TESTED.** If you’d like to help create this script, create a pull request.
 
 This project is not affiliated with Glimesh, Inc
 
