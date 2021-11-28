@@ -1,0 +1,76 @@
+{
+	"name": "glimesh-widgets",
+	"version": "0.0.1",
+	"description": "Provides widgets for https://glimesh.tv on every profile that has the correct data.",
+	"private": true,
+	"author": "Nicholas Miller",
+	"license": "WTFPL",
+	"devDependencies": {
+		"@types/eslint": "^8.2.0",
+		"eslint": "8.3.0",
+		"eslint-plugin-unicorn": "39.0.0"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"commonjs": true,
+			"es2021": true,
+			"node": true
+		},
+		"plugins": [
+			"unicorn"
+		],
+		"extends": [
+			"eslint:recommended",
+			"plugin:unicorn/recommended"
+		],
+		"parserOptions": {
+			"ecmaVersion": "latest"
+		},
+		"globals": {
+			"GM_log": "readonly",
+			"GM_registerMenuCommand": "readonly"
+		},
+		"rules": {
+			"indent": [
+				"error",
+				"tab"
+			],
+			"linebreak-style": [
+				"error",
+				"windows"
+			],
+			"quotes": [
+				"warn",
+				"double"
+			],
+			"semi": [
+				"error",
+				"always"
+			],
+			"no-unused-vars": "warn",
+			"comma-spacing": "error",
+			"camelcase": "warn",
+			"no-var": "error",
+			"no-warning-comments": "warn",
+			"yoda": "warn",
+			"no-constant-condition": [
+				"error",
+				{
+					"checkLoops": false
+				}
+			],
+			"unicorn/consistent-function-scoping": "warn",
+			"unicorn/filename-case": [
+				"error",
+				{
+					"case": "camelCase"
+				}
+			],
+			"unicorn/prefer-query-selector": "warn",
+			"unicorn/prefer-dom-node-dataset": "off",
+			"unicorn/prefer-module": "off"
+		}
+	}
+}
