@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Glimesh Widgets
-// @namespace    http://github.com/NicholasDJM/glimeshwidgets
+// @namespace    http://github.com/NicholasDJM/Glimesh-Widgets
 // @version      0.1
 // @description  Provides widgets for https://glimesh.tv on every profile that has the correct data.
 // @author       Nicholas Miller
