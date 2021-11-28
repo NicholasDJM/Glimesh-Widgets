@@ -26,9 +26,9 @@ function log(text) {
 function createCard() {
 	let container = $(".container-fluid.container-stream");
 	let social = $(".container-fluid.container-stream #social-buttons");
-	let row = $(".container-fluid.container-stream > .row:nth-child(2)");
+	let row = $(".container-fluid.container-stream > .row:nth-child(1)");
 	let newRow = $(`<div class="row widget-row"></div>`);
-	row.before(newRow);
+	row.after(newRow);
 	if (container.length > 0 && social.length > 0) {
 		let foundTwitter = false,
 			createdTwitter = false,
@@ -81,14 +81,14 @@ function createCard() {
 					newRow.append(column);
 					column.append(card);
 					card.append(content);
-					console.dir(widget);
+					//console.dir(widget);
 					content.append(widget);
 					if (createdTwitter) {
 						let script = $("<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>");
 						widget.after(script);
 					}
 					log("Widget Appended: " +type);
-				}, 1000);
+				}, 10);
 				//console.dir(row);
 			};
 		social.find("li").each((index, element)=>{
@@ -104,10 +104,10 @@ function createCard() {
 				foundDiscord = true;
 				discordLink = discord.attr("href");
 				log("Found Discord Link: "+discordLink);
-				discordID = $("img[alt*=GlimeshWidgets").attr("alt").split("discord=")[1];
+				discordID = $("img[alt*=GlimeshWidgets");
 				if (discordID.length > 0) {
-					//
-					log("Discord Server ID: "+discordID);
+					log("Discord Server ID: "+discordID.attr("alt").split("discord=")[1]);
+					discordID = discordID.attr("alt").split("discord=")[1];
 					card("discord");
 				} else {
 					log("Cannot find Discord Server ID");
@@ -130,11 +130,11 @@ $(()=> {
 				log(".widget-row does not exist, creating...");
 				createCard();
 			}
-		}, 1000);
+		}, 10);
 	}
 	timer();
 	let nav = $(".navbar-nav.d-lg-flex.align-items-lg-center .nav-item:first-child");
-	console.dir("Nav object:", nav);
+	//console.dir("Nav object:", nav);
 	let newButton = $(`<li class="nav-item">
 	<a id="glimeshWidgetsSettingsButton" class="nav-link" target="_blank" data-placement="bottom" data-original-title="Glimesh Widgets Settings" data-toggle="tooltip" style="cursor:pointer">
 		<i class="fas fa-cog fa-fw"></i>
@@ -163,7 +163,7 @@ $(()=> {
 			$("body").append(container);
 			$("#glimeshWidgetsSettingsSave").click(saveSettings);
 		} else {
-			console.dir(menu);
+			//console.dir(menu);
 			log("Destroying settings menu");
 			menu.remove();
 		}
