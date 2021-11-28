@@ -5,7 +5,9 @@
 // @description  Provides widgets for https://glimesh.tv on every profile that has the correct data.
 // @author       Nicholas Miller
 // @include      https://glimesh.tv/*
+// @exclude      https://glimesh.tv/
 // @exclude      https://glimesh.tv/users/*
+// @exclude      https://glimesh.tv/*/profile
 // @exclude      https://glimesh.tv/streams/*
 // @exclude      https://glimesh.tv/events/*
 // @exclude      https://glimesh.tv/platform_subscriptions/*
@@ -25,9 +27,12 @@ function log(text) {
 }
 function createCard() {
 	let container = $(".container-fluid.container-stream");
-	let social = $(".container-fluid.container-stream #social-buttons");
-	let row = $(".container-fluid.container-stream > .row:nth-child(1)");
-	let newRow = $(`<div class="row widget-row"></div>`);
+	let social = container.find("#social-buttons");
+	let row = $("#app");
+	// Unfortunately, we cannot place anything inside the app div, as that is constantly refreshed by Glimesh's scripts, and thus our widgets get deleted.
+	// The navigation bar is also inside the app div, so we must place our widgets below.
+	let newRow = $("<div class=\"row widget-row\"></div>");
+	newRow.attr("style", "padding-left:15px;padding-right:15px");
 	row.after(newRow);
 	if (container.length > 0 && social.length > 0) {
 		let foundTwitter = false,
@@ -40,11 +45,13 @@ function createCard() {
 			card = (type) => {
 				let column = $("<div></div>");
 				column.addClass("col-lg-3 layout-spacing widget");
+				column.attr("style", "flex:0 0 22.5%");
 				let card = $("<div></div>");
 				card.addClass("card");
 				let content = $("<div></div>");
 				content.addClass("card-body user-content-body");
-				content.id = type;
+				content.attr("style", "flex:0 0 22.5%");
+				content.attr("id", type);
 				let widget;
 				switch(type) {
 				case "discord":
@@ -120,17 +127,18 @@ function createCard() {
 
 $(()=> {
 	log("Glimesh Widgets Version 0.1 Initializing");
-	log("jQuery Version: "+jQuery.fn.jquery);
 	if (jQuery.fn.jquery != "3.6.0") {
-		throw new Error("We were expecting jQuery version 3.6.0");
+		throw new Error("We were expecting jQuery version 3.6.0, we got", jQuery.fn.jquery);
 	}
+	log("jQuery Version: "+jQuery.fn.jquery);
+	let streamerName;
 	function timer() {
 		setInterval(()=>{
 			if ($(".widget-row").length === 0) {
 				log(".widget-row does not exist, creating...");
 				createCard();
 			}
-		}, 10);
+		}, 100);
 	}
 	timer();
 	let nav = $(".navbar-nav.d-lg-flex.align-items-lg-center .nav-item:first-child");
@@ -150,15 +158,25 @@ $(()=> {
 		let menu = $("#glimeshWidgetsMenu");
 		if (menu.length === 0) {
 			log("Creating settings menu");
-			let container = $(`<div id='glimeshWidgetsMenu' style='position:fixed;top:15px;left:0;right:0;z-index:123456790;border-radius:.25rem;margin:auto;width:300px;padding:20px;background-color:#1b2e4b'>
-	<h6>Glimesh Widgets Settings</h6>
+			if (streamerName === undefined) {
+				streamerName = $("[title='View Profile']").find("h3").text();
+			}
+			let container = $(`<div id='glimeshWidgetsMenu' style='position:fixed;top:15px;left:0;right:0;z-index:123456790;border-radius:.25rem;margin:auto;width:350px;padding:20px;background-color:#1b2e4b'>
+	<h5>Glimesh Widgets Settings</h5>
 	<a href="https://github.com/NicholasDJM/Glimesh-Widgets">Github</a><br>
 	<br>
+	<strong>Global Settings</strong><br>
+	<input name="widget-enable" type="checkbox" checked> Enable</input><br>
+	<input name="widget-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
+	<input name="widget-discord" type="checkbox" checked> Enable Discord Widget</input><br>
+	<br>
+	<strong>Channel Settings for ${streamerName}</strong><br>
 	<input name="widget-enable" type="checkbox" checked> Enable</input><br>
 	<input name="widget-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
 	<input name="widget-discord" type="checkbox" checked> Enable Discord Widget</input><br>
 	<br>
 	<button id="glimeshWidgetsSettingsSave" class="btn btn-success" type="button">Save</button>
+	<p>These settings currently do not work. Help us build this script at github.com/NicholasDJM/Glimesh-Widgets</p>
 </div>`);
 			$("body").append(container);
 			$("#glimeshWidgetsSettingsSave").click(saveSettings);

@@ -1,8 +1,8 @@
 # Glimesh Widgets
 
-[![License](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAYAAABzyUiPAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AwbFx8sDSuc4wAABHdJREFUWMPtmEFIVFsYx393muxiaGUFFQwDRjOlRRFKRIRkQqt2FS0Co3UrCRNJECSqhftaRJuSFiJBEBRRkyARhE0WSosYq5km0xlKZhqvc+/5v4V5X/W0p+PbPOmDC/d833fuOed/7v1//3MtQPyxki0IIP2N4d27d+ns7GRwcBCA8vJydu3axdatWykrKyOdTvP69WtSqRSrVq2itraWbdu2UV5ezufPnxkeHiaRSABgWRZnz57l4sWLVFRULDvwLMviO34z9vLlSx08eFDf30odOXJEt2/fViaTkeu68jxP375907Nnz3Tp0iXduHFDY2NjKhaL8jxPhUJBQ0NDam9vV1VVlQBZlqWuri5JUiKR0Nq1a/3n/58vzbx18gE0xqilpcVPOHHihIaHhyVJqVRKyWRSyWRSxhhJkud5PvBfvnzx45OTkzLG6Nq1a1q3bp0AhUIh9ff3S5JOnz69PAF89eqVwuGwAEUiEQ0MDEiS+vv7tX//fkUiER0/flzpdFq/2s2bNxWJRBSJRNTa2irP82SMUVtbmz/guXPnJEkvXrxY7ATnjc1lv+b9Gpsvf67+iwLw+vXrCgQC/mKNMTLGqLOz0+/U3Nws13X1+PFj9fb2qre3V5lMRrFYTJWVlQIUjUY1OjoqSYrH4/6m1NXVaXx8fMGTnG9BvwPj32IL8S8WwMAsIY6MjGCMwbZtDhw4gGVZFItFhoaGfNLcvn0709PTdHd3c/LkSc6cOUM8HiccDrN+/XoAPn78SDKZBCAajbJjxw4APnz4wKdPn0oia0k/FbofSXyWyOdq/+ibz79UCwB4nsfExAQAtm2zefNmAKanp8lkMgCsWLGCLVu2AFAsFnFdF9d1AaisrGTNmjUAOI7D169fAVi5ciVVVVUAFAoFcrlcSeDNdV9K/4VsSkkABgIBVq9eDYDruuTzeR+0Wb8xhmw2iyQKhcJPPsdxcBxnRhcFg9i27cdnc4PBIGVlZYuWCIuNlSpFlqQDLcuiuroay7LI5XIMDg7S2NiIbdvs3buXe/fuIYm+vj7evXtHPB4HYGpqip6eHh49esSbN28ACIVChMNhAMbHx3n79i0AGzZsYOPGjUvVW/8ZQPP5fxxjoeBKkmKxmK/RGhsb/Wr7/Plz7du3zydPy7IE6NChQwqFQv8g166uLl/qXL16VcFgUIBOnTq1qCo8F7EvpLCUkvu7qr3gKpzL5XTs2DE/4cKFCz4QDx8+VHNzs2pqarRnzx6dP39e79+/161bt3T06FFFo1E1NDSou7tbjuNIkp48eaL6+noBsm1bPT09y1sHStKdO3e0adOmmfIcCKitrU2JRELGGE1NTSmdTmtsbEz5fF6xWEwjIyOanJxUKpVSNpuVMUaO46ivr08NDQ0/yZ98Pr8sTyLW94b/PV+5coWOjg6KxSIA9fX1NDU1sXPnTmzbZnR0lIGBAR48eEB1dTVNTU3s3r2biooKkskkT58+5f79+2SzWQAOHz7M5cuXqaurW5ZnYevP35il2V+SVBekBnkz6QAAAABJRU5ErkJggg==)](https://en.wikipedia.org/wiki/WTFPL)
+[![License](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAYAAABzyUiPAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AwbFx8sDSuc4wAABHdJREFUWMPtmEFIVFsYx393muxiaGUFFQwDRjOlRRFKRIRkQqt2FS0Co3UrCRNJECSqhftaRJuSFiJBEBRRkyARhE0WSosYq5km0xlKZhqvc+/5v4V5X/W0p+PbPOmDC/d833fuOed/7v1//3MtQPyxki0IIP2N4d27d+ns7GRwcBCA8vJydu3axdatWykrKyOdTvP69WtSqRSrVq2itraWbdu2UV5ezufPnxkeHiaRSABgWRZnz57l4sWLVFRULDvwLMviO34z9vLlSx08eFDf30odOXJEt2/fViaTkeu68jxP375907Nnz3Tp0iXduHFDY2NjKhaL8jxPhUJBQ0NDam9vV1VVlQBZlqWuri5JUiKR0Nq1a/3n/58vzbx18gE0xqilpcVPOHHihIaHhyVJqVRKyWRSyWRSxhhJkud5PvBfvnzx45OTkzLG6Nq1a1q3bp0AhUIh9ff3S5JOnz69PAF89eqVwuGwAEUiEQ0MDEiS+vv7tX//fkUiER0/flzpdFq/2s2bNxWJRBSJRNTa2irP82SMUVtbmz/guXPnJEkvXrxY7ATnjc1lv+b9Gpsvf67+iwLw+vXrCgQC/mKNMTLGqLOz0+/U3Nws13X1+PFj9fb2qre3V5lMRrFYTJWVlQIUjUY1OjoqSYrH4/6m1NXVaXx8fMGTnG9BvwPj32IL8S8WwMAsIY6MjGCMwbZtDhw4gGVZFItFhoaGfNLcvn0709PTdHd3c/LkSc6cOUM8HiccDrN+/XoAPn78SDKZBCAajbJjxw4APnz4wKdPn0oia0k/FbofSXyWyOdq/+ibz79UCwB4nsfExAQAtm2zefNmAKanp8lkMgCsWLGCLVu2AFAsFnFdF9d1AaisrGTNmjUAOI7D169fAVi5ciVVVVUAFAoFcrlcSeDNdV9K/4VsSkkABgIBVq9eDYDruuTzeR+0Wb8xhmw2iyQKhcJPPsdxcBxnRhcFg9i27cdnc4PBIGVlZYuWCIuNlSpFlqQDLcuiuroay7LI5XIMDg7S2NiIbdvs3buXe/fuIYm+vj7evXtHPB4HYGpqip6eHh49esSbN28ACIVChMNhAMbHx3n79i0AGzZsYOPGjUvVW/8ZQPP5fxxjoeBKkmKxmK/RGhsb/Wr7/Plz7du3zydPy7IE6NChQwqFQv8g166uLl/qXL16VcFgUIBOnTq1qCo8F7EvpLCUkvu7qr3gKpzL5XTs2DE/4cKFCz4QDx8+VHNzs2pqarRnzx6dP39e79+/161bt3T06FFFo1E1NDSou7tbjuNIkp48eaL6+noBsm1bPT09y1sHStKdO3e0adOmmfIcCKitrU2JRELGGE1NTSmdTmtsbEz5fF6xWEwjIyOanJxUKpVSNpuVMUaO46ivr08NDQ0/yZ98Pr8sTyLW94b/PV+5coWOjg6KxSIA9fX1NDU1sXPnTmzbZnR0lIGBAR48eEB1dTVNTU3s3r2biooKkskkT58+5f79+2SzWQAOHz7M5cuXqaurW5ZnYevP35il2V+SVBekBnkz6QAAAABJRU5ErkJggg==)](http://www.wtfpl.net/about/)
 
-**Warning: This is script is in ALPHA, and comes with zero warranty. This script is very unstable at this point.**
+**Warning: This is script is in ALPHA, and comes with zero warranty. This script is very unstable at this point, AND NOT BATTLE-TESTED.** If you’d like to help create this script, create a pull request.
 
 This project is not affiliated with Glimesh, Inc
 
@@ -27,7 +27,15 @@ Simple Dot Image (If you don’t want to advertise Glimesh Widgets) [![GlimeshWi
 
 Of course, where it says “REPLACE ME WITH SERVER ID”, you need to get the server ID and copy/paste it there.
 
-To get the ID, go to your Discord server settings, go down to Widget, turn on “Enable server widget”, and copy the server ID, then paste into the alt text section of your image. The image doesn’t have to be the image we provide, it can be any image, though I recommend one of two above.
+To get the ID, go to your Discord server settings, go down to Widget, turn on “Enable server widget”, and copy the server ID, then paste into the alt text section of your image.
+
+The image doesn’t have to be the images we provide, it can be any image, though I recommend one of two above.
+
+## Adblockers
+
+You may find that the Twitter widget doesn’t load, and only says “Tweets by…”, check to make sure your adblocker isn’t blocking Twitter. For Firefox users, make sure the built-in tracker protection is turned off: At the beginning of the address bar is a shield icon, click that and turn off tracking protection.
+
+If you prefer not to see the Twitter widget to protect against tracking, simply disable it in the Widget Settings (The cog wheel at the top right).
 
 ## [Shields.io](https://shields.io)
 
@@ -37,5 +45,10 @@ You may want to take a look at [Social](https://shields.io/category/social) and 
 
 - CRITICAL: Add support for style option
 - CRITICAL: Finish settings panel
-
+- CRITICAL: Sanitize image alt text before accepting it.
+	- Also sanitize all other potential injection points.
+- Create Google calendar widget
+- Add other platform widgets that are supported by Glimesh
+	- Including Instagram, YouTube, Guilded, and Streamloots
+- Add to settings panel: per channel enable/disable
 - Create Chrome and Firefox extensions.
