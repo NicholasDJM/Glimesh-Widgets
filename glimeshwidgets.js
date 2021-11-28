@@ -141,7 +141,7 @@ $(()=> {
 			log("Creating settings menu");
 			let container = $(`<div id='glimeshWidgetsMenu' style='position:fixed;top:15px;left:0;right:0;z-index:123456790;border-radius:.25rem;margin:auto;width:300px;padding:20px;background-color:#1b2e4b'>
 	<h6>Glimesh Widgets Settings</h6>
-	<a href="https://github.com/NicholasDJM/glimeshwidgets">Github</a><br>
+	<a href="https://github.com/NicholasDJM/Glimesh-Widgets">Github</a><br>
 	<br>
 	<input name="widget-enable" type="checkbox" checked> Enable</input><br>
 	<input name="widget-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
