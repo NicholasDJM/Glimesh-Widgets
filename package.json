@@ -1,6 +1,6 @@
 {
 	"name": "glimesh-widgets",
-	"version": "0.0.1-alpha",
+	"version": "0.0.2-alpha",
 	"description": "Provides widgets for https://glimesh.tv on every profile that has the correct data.",
 	"private": true,
 	"author": "Nicholas Miller",
@@ -30,7 +30,10 @@
 		},
 		"globals": {
 			"GM_log": "readonly",
-			"GM_registerMenuCommand": "readonly"
+			"GM_registerMenuCommand": "readonly",
+			"GM_getValue": "readonly",
+			"GM_setValue": "readonly",
+			"GM_deleteValue": "readonly"
 		},
 		"rules": {
 			"indent": [
@@ -70,7 +73,8 @@
 			],
 			"unicorn/prefer-query-selector": "warn",
 			"unicorn/prefer-dom-node-dataset": "off",
-			"unicorn/prefer-module": "off"
+			"unicorn/prefer-module": "off",
+			"unicorn/no-null": "off"
 		}
 	}
 }

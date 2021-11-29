@@ -45,10 +45,11 @@ You may want to take a look at [Social](https://shields.io/category/social) and 
 
 - CRITICAL: Add support for style option
 - CRITICAL: Finish settings panel
+	- Partially complete: Global settings now function.
 - CRITICAL: Sanitize image alt text before accepting it.
-	- Also sanitize all other potential injection points.
+  - Also sanitize all other potential injection points.
 - Create Google calendar widget
 - Add other platform widgets that are supported by Glimesh
-	- Including Instagram, YouTube, Guilded, and Streamloots
+  - Including Instagram, YouTube, Guilded, and Streamloots
 - Add to settings panel: per channel enable/disable
 - Create Chrome and Firefox extensions.

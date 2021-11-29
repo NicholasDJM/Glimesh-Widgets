@@ -1,7 +1,10 @@
 // ==UserScript==
 // @name         Glimesh Widgets
 // @namespace    http://github.com/NicholasDJM/Glimesh-Widgets
-// @version      0.1
+// @version      0.0.2-alpha
+// @updateURL    https://raw.githubusercontent.com/NicholasDJM/Glimesh-Widgets/master/glimeshwidgets.js
+// @downloadURL  https://raw.githubusercontent.com/NicholasDJM/Glimesh-Widgets/master/glimeshwidgets.js
+// @supportURL   https://github.com/NicholasDJM/Glimesh-Widgets/issues/new
 // @description  Provides widgets for https://glimesh.tv on every profile that has the correct data.
 // @author       Nicholas Miller
 // @include      https://glimesh.tv/*
@@ -20,12 +23,50 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
+// @noframes
 // ==/UserScript==
-/* global $ jQuery */
+/* global $, jQuery */
 function log(text) {
 	GM_log("Glimesh Widgets: "+text);
 }
-function createCard() {
+function loadSettings(setting, streamerName=null) {
+	if (streamerName===null) {
+		switch(setting) {
+		case "enabled":
+			return GM_getValue("enabled", true);
+		case "discord":
+			return GM_getValue("discord", true);
+		case "twitter":
+			return GM_getValue("twitter", true);
+		case "theme":
+			return GM_getValue("theme", "auto");
+		}
+		throw new Error("Setting is blank.");
+	} else {
+		//
+	}
+}
+function saveSettings(setting, value) {
+	switch(setting) {
+	case "enabled":
+		GM_setValue("enabled", value);
+		log("Set enabled="+value);
+		break;
+	case "discord":
+		GM_setValue("discord", value);
+		log("Set discord="+value);
+		break;
+	case "twitter":
+		GM_setValue("twitter", value);
+		log("Set twitter="+value);
+		break;
+	case "theme":
+		GM_setValue("theme", value);
+		log("Set theme="+value);
+		break;
+	}
+}
+function createCard(theme, name) {
 	let container = $(".container-fluid.container-stream");
 	let social = container.find("#social-buttons");
 	let row = $("#app");
@@ -34,7 +75,7 @@ function createCard() {
 	let newRow = $("<div class=\"row widget-row\"></div>");
 	newRow.attr("style", "padding-left:15px;padding-right:15px");
 	row.after(newRow);
-	if (container.length > 0 && social.length > 0) {
+	if (container.length > 0 && social.length > 0 && loadSettings("enabled")) {
 		let foundTwitter = false,
 			createdTwitter = false,
 			foundDiscord = false,
@@ -43,6 +84,12 @@ function createCard() {
 			twitterLink,
 			discordID,
 			card = (type) => {
+				if (!loadSettings("discord") && type=="discord" && !loadSettings("discord", name)) {
+					return;
+				}
+				if (!loadSettings("twitter") && type=="twitter" && !loadSettings("twitter", name)) {
+					return;
+				}
 				let column = $("<div></div>");
 				column.addClass("col-lg-3 layout-spacing widget");
 				column.attr("style", "flex:0 0 22.5%");
@@ -63,7 +110,7 @@ function createCard() {
 						widget.attr("allowtransparency", true);
 						widget.attr("frameborder", 0);
 						widget.attr("sandbox", "allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts");
-						widget.attr("src", `https://discord.com/widget?id=${discordID}&theme=dark`);
+						widget.attr("src", `https://discord.com/widget?id=${discordID}&theme=${theme}`);
 						widget.attr("data-widget", "discord");
 						log("Discord Widget Created");
 					}
@@ -76,9 +123,10 @@ function createCard() {
 						widget.attr("data-width", "350");
 						widget.attr("data-height", "500");
 						widget.attr("data-dnt", "true");
-						widget.attr("data-theme", "dark");
+						widget.attr("data-theme", theme);
 						widget.addClass("twitter-timeline");
 						widget.text(`Tweets by ${twitterLink.split("https://twitter.com/")[1]}`);
+						widget.attr("data-widget", "twitter");
 						log("Twitter Widget Created");
 					}
 					break;
@@ -113,8 +161,8 @@ function createCard() {
 				log("Found Discord Link: "+discordLink);
 				discordID = $("img[alt*=GlimeshWidgets");
 				if (discordID.length > 0) {
-					log("Discord Server ID: "+discordID.attr("alt").split("discord=")[1]);
 					discordID = discordID.attr("alt").split("discord=")[1];
+					log("Discord Server ID: "+discordID);
 					card("discord");
 				} else {
 					log("Cannot find Discord Server ID");
@@ -131,59 +179,86 @@ $(()=> {
 		throw new Error("We were expecting jQuery version 3.6.0, we got", jQuery.fn.jquery);
 	}
 	log("jQuery Version: "+jQuery.fn.jquery);
-	let streamerName;
+	let streamerName = $("[title='View Profile']").find("h3").text(),
+		theme = $("#settingsDropdown:contains(🌘)").length > 0 ? "dark" : "light";
 	function timer() {
-		setInterval(()=>{
-			if ($(".widget-row").length === 0) {
-				log(".widget-row does not exist, creating...");
-				createCard();
-			}
-		}, 100);
+		if (loadSettings("enabled")) {
+			setInterval(()=>{
+				if ($(".widget-row").length === 0) {
+					log(".widget-row does not exist, creating...");
+					createCard(theme, streamerName);
+				}
+			}, 100);
+		}
 	}
 	timer();
 	let nav = $(".navbar-nav.d-lg-flex.align-items-lg-center .nav-item:first-child");
 	//console.dir("Nav object:", nav);
-	let newButton = $(`<li class="nav-item">
-	<a id="glimeshWidgetsSettingsButton" class="nav-link" target="_blank" data-placement="bottom" data-original-title="Glimesh Widgets Settings" data-toggle="tooltip" style="cursor:pointer">
-		<i class="fas fa-cog fa-fw"></i>
-		<span class="d-lg-none">Glimesh Widgets Settings</span>
-	</a>
-</d>`);
-	// eslint-disable-next-line unicorn/consistent-function-scoping
-	const saveSettings = () => {
-		log("TODO: Save Settings");
+	let newButton = $("<li></li>");
+	newButton.addClass("nav-item");
+	let buttonLink = $("<a></a>");
+	buttonLink.attr("id", "glimeshWidgetsSettingsButton");
+	buttonLink.addClass("nav-link");
+	buttonLink.attr("target", "_blank");
+	buttonLink.attr("style", "cursor:pointer");
+	buttonLink.data("placement", "bottom");
+	buttonLink.data("original-title", "Glimesh Widgets Settings");
+	buttonLink.data("toggle", "tooltip");
+	newButton.append(buttonLink);
+	let buttonIcon = $("<i></i>");
+	buttonIcon.addClass("fas fa-cog fa-fw");
+	buttonLink.append(buttonIcon);
+	let buttonSpan = $("<span></span>");
+	buttonSpan.text("Glimesh Widgets Settings");
+	buttonSpan.addClass("d-lg-none");
+	buttonLink.append(buttonSpan);
+
+	const closeMenu = () => {
+		log("Saving Settings");
+		saveSettings("enabled", $("[name='widget-enable']").prop("checked"));
+		saveSettings("discord", $("[name='widget-discord']").prop("checked"));
+		saveSettings("twitter", $("[name='widget-twitter']").prop("checked"));
 		handleMenu();
 	};
 	const handleMenu = () => {
 		let menu = $("#glimeshWidgetsMenu");
 		if (menu.length === 0) {
 			log("Creating settings menu");
-			if (streamerName === undefined) {
-				streamerName = $("[title='View Profile']").find("h3").text();
-			}
+			log("enabled="+loadSettings("enabled"));
 			let container = $(`<div id='glimeshWidgetsMenu' style='position:fixed;top:15px;left:0;right:0;z-index:123456790;border-radius:.25rem;margin:auto;width:350px;padding:20px;background-color:#1b2e4b'>
 	<h5>Glimesh Widgets Settings</h5>
 	<a href="https://github.com/NicholasDJM/Glimesh-Widgets">Github</a><br>
 	<br>
 	<strong>Global Settings</strong><br>
-	<input name="widget-enable" type="checkbox" checked> Enable</input><br>
-	<input name="widget-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
-	<input name="widget-discord" type="checkbox" checked> Enable Discord Widget</input><br>
+	<input name="widget-enable" type="checkbox" ${loadSettings("enabled") ? "checked" : ""}> Enable</input><br>
+	<input name="widget-twitter" type="checkbox" ${loadSettings("twitter") ? "checked" : ""}> Enable Twitter Widget</input><br>
+	<input name="widget-discord" type="checkbox" ${loadSettings("discord") ? "checked" : ""}> Enable Discord Widget</input><br>
 	<br>
-	<strong>Channel Settings for ${streamerName}</strong><br>
-	<input name="widget-enable" type="checkbox" checked> Enable</input><br>
-	<input name="widget-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
-	<input name="widget-discord" type="checkbox" checked> Enable Discord Widget</input><br>
+	<strong>Channel Settings${streamerName ? " for "+streamerName : ""}</strong><br>
+	<input name="widget-streamer-enable" type="checkbox" checked> Enable</input><br>
+	<input name="widget-streamer-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
+	<input name="widget-streamer-discord" type="checkbox" checked> Enable Discord Widget</input><br>
+	<label for="widget-streamer-theme">Widget Theme</label>
+	<select name="widget-streamer-theme" id="widget-streamer-theme">
+		<option value="streamer">Defined by Streamer (Default)</option>
+		<option value="auto">Based on site theme </option>
+		<option value="dark">Dark</option>
+		<option value="light">Light</option>
+	</select><br>
 	<br>
 	<button id="glimeshWidgetsSettingsSave" class="btn btn-success" type="button">Save</button>
-	<p>These settings currently do not work. Help us build this script at github.com/NicholasDJM/Glimesh-Widgets</p>
+	<button id="glimeshWidgetsSettingsClose" class="btn btn-primary" type="button">Cancel</button>
 </div>`);
 			$("body").append(container);
-			$("#glimeshWidgetsSettingsSave").click(saveSettings);
+			$("#glimeshWidgetsSettingsSave").click(closeMenu);
+			$("#glimeshWidgetsSettingsClose").click(handleMenu);
 		} else {
 			//console.dir(menu);
-			log("Destroying settings menu");
-			menu.remove();
+			log("Toggling settings menu visibility");
+			$("[name='widget-enable']").prop("checked", loadSettings("enabled"));
+			$("[name='widget-discord']").prop("checked", loadSettings("discord"));
+			$("[name='widget-twitter']").prop("checked", loadSettings("twitter"));
+			menu.toggle();
 		}
 	};
 	nav.before(newButton);
