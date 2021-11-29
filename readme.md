@@ -1,6 +1,6 @@
-# Glimesh Widgets
+# Glimesh Widgets ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/NicholasDJM/Glimesh-Widgets?include_prereleases)
 
-[![WTFPL](https://img.shields.io/github/license/NicholasDJM/Glimesh-Widgets)](http://www.wtfpl.net/about/) [![Version](https://img.shields.io/github/package-json/v/NicholasDJM/Glimesh-Widgets)](http://github.com/NicholasDJM/Glimesh-Widgets/releases)
+[![WTFPL](https://img.shields.io/github/license/NicholasDJM/Glimesh-Widgets)](http://www.wtfpl.net/about/) [![Version](https://img.shields.io/github/package-json/v/NicholasDJM/Glimesh-Widgets)](http://github.com/NicholasDJM/Glimesh-Widgets/releases) ![GitHub issues](https://img.shields.io/github/issues/NicholasDJM/Glimesh-Widgets)
 
 **Warning: This script is in ALPHA, and comes with zero warranty. This script is very unstable at this point, AND NOT BATTLE-TESTED.** If you’d like to help create this script, create a pull request.
 
