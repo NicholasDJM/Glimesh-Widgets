@@ -91,13 +91,12 @@ function createCard(theme, name) {
 					return;
 				}
 				let column = $("<div></div>");
-				column.addClass("col-lg-3 layout-spacing widget");
-				column.attr("style", "flex:0 0 22.5%");
+				column.addClass("col-lg-4 layout-spacing widget");
+				column.attr("style", "width:450px;max-width:450px");
 				let card = $("<div></div>");
 				card.addClass("card");
 				let content = $("<div></div>");
 				content.addClass("card-body user-content-body");
-				content.attr("style", "flex:0 0 22.5%");
 				content.attr("id", type);
 				let widget;
 				switch(type) {
@@ -159,9 +158,17 @@ function createCard(theme, name) {
 				foundDiscord = true;
 				discordLink = discord.attr("href");
 				log("Found Discord Link: "+discordLink);
-				discordID = $("img[alt*=GlimeshWidgets");
+				discordID = $("img[alt^=\"GlimeshWidgets\"");
 				if (discordID.length > 0) {
 					discordID = discordID.attr("alt").split("discord=")[1];
+					// eslint-disable-next-line unicorn/prevent-abbreviations
+					for (let i = 0; i < discordID.length; i++) {
+						if (!(discordID[i] >= 0 && discordID[i] <= 9)) {
+							discordID = discordID.split(discordID[i])[0];
+							log("split: "+discordID[i]);
+							break;
+						}
+					}
 					log("Discord Server ID: "+discordID);
 					card("discord");
 				} else {
@@ -234,18 +241,13 @@ $(()=> {
 	<input name="widget-twitter" type="checkbox" ${loadSettings("twitter") ? "checked" : ""}> Enable Twitter Widget</input><br>
 	<input name="widget-discord" type="checkbox" ${loadSettings("discord") ? "checked" : ""}> Enable Discord Widget</input><br>
 	<br>
-	<strong>Channel Settings${streamerName ? " for "+streamerName : ""}</strong><br>
-	<input name="widget-streamer-enable" type="checkbox" checked> Enable</input><br>
-	<input name="widget-streamer-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
-	<input name="widget-streamer-discord" type="checkbox" checked> Enable Discord Widget</input><br>
-	<label for="widget-streamer-theme">Widget Theme</label>
-	<select name="widget-streamer-theme" id="widget-streamer-theme">
-		<option value="streamer">Defined by Streamer (Default)</option>
-		<option value="auto">Based on site theme </option>
-		<option value="dark">Dark</option>
-		<option value="light">Light</option>
-	</select><br>
-	<br>
+	<!--
+		<strong>Channel Settings${streamerName ? " for "+streamerName : ""}</strong><br>
+		<input name="widget-streamer-enable" type="checkbox" checked> Enable</input><br>
+		<input name="widget-streamer-twitter" type="checkbox" checked> Enable Twitter Widget</input><br>
+		<input name="widget-streamer-discord" type="checkbox" checked> Enable Discord Widget</input><br>
+		<br>
+	-->
 	<button id="glimeshWidgetsSettingsSave" class="btn btn-success" type="button">Save</button>
 	<button id="glimeshWidgetsSettingsClose" class="btn btn-primary" type="button">Cancel</button>
 </div>`);
