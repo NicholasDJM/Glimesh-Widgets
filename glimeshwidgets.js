@@ -117,12 +117,13 @@ function createMenu() {
 	const { name } = variables(),
 		// eslint-disable-next-line unicorn/consistent-function-scoping
 		input = (key, global = true) => {
-			return `<input id="widget-${( global ? "global-" : "") + key.toLowerCase()}" type="checkbox"${GM_getValue((global ? "global" : name) + key, true) ? " checked" : ""}></input><label for="widget-${(global ? "global-" : "") + key.toLowerCase()}">${key}</label><br>`;
+			return `<input id="widget-${( global ? "global-" : "") + key.toLowerCase()}" type="checkbox"${GM_getValue((global ? "global" : name) + key, true) ? " checked" : ""}></input><label class="widget-setting-label" for="widget-${(global ? "global-" : "") + key.toLowerCase()}">${key}</label><br>`;
 		},
 		menu = $(`<div id="widget-menu">
 	<h6>Glimesh Widgets Settings</h6>
 	<a href="https://www.github.com/NicholasDJM/Glimesh-Widgets">Github</a><br>
-	<strong>Global Settings</strong><br>
+	<br>
+	<h6>Global Settings</h6>
 	${input("Enable") +
 	input("Twitter") +
 	input("Discord") +
@@ -177,6 +178,9 @@ function addStyle() {
 	background-color:rgba(0,0,0,0.25%);
 	z-index:123456790;
 	display:none;
+}
+.widget-setting-label {
+	padding-left:5px;
 }`);
 }
 
