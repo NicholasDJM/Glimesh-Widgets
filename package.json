@@ -29,11 +29,13 @@
 			"ecmaVersion": "latest"
 		},
 		"globals": {
+			"GM_info": "readonly",
 			"GM_log": "readonly",
 			"GM_registerMenuCommand": "readonly",
 			"GM_getValue": "readonly",
 			"GM_setValue": "readonly",
-			"GM_deleteValue": "readonly"
+			"GM_deleteValue": "readonly",
+			"GM_addStyle": "readonly"
 		},
 		"rules": {
 			"indent": [
@@ -54,7 +56,15 @@
 			],
 			"no-unused-vars": "warn",
 			"comma-spacing": "error",
-			"camelcase": "warn",
+			"comma-dangle": "error",
+			"camelcase": [
+				"warn",
+				{
+					"allow": [
+						"GM_info"
+					]
+				}
+			],
 			"no-var": "error",
 			"no-warning-comments": "warn",
 			"yoda": "warn",
@@ -64,6 +74,7 @@
 					"checkLoops": false
 				}
 			],
+			"space-infix-ops": "error",
 			"unicorn/consistent-function-scoping": "warn",
 			"unicorn/filename-case": [
 				"error",
@@ -74,7 +85,8 @@
 			"unicorn/prefer-query-selector": "warn",
 			"unicorn/prefer-dom-node-dataset": "off",
 			"unicorn/prefer-module": "off",
-			"unicorn/no-null": "off"
+			"unicorn/no-null": "off",
+			"unicorn/prefer-array-some": "off"
 		}
 	}
 }

@@ -8,11 +8,13 @@ This project is not affiliated with Glimesh, Inc
 
 This Tampermonkey script is used to add widgets to channels on https://glimesh.tv. You need the Tampermonkey extension installed before installing this script. Head to https://tampermonkey.net to install. This script has only been tested on Tampermonkey, but might work on other userscript extensions.
 
-Currently has support for Twitter and Discord widgets. Twitter works out-of-the-box, you only need to connect your Twitter account to your Glimesh Account.
+Currently has support for Twitter, Discord, and Google Calendar widgets. Twitter works out-of-the-box, you only need to connect your Twitter account to your Glimesh Account.
+
+#### Discord Widget and Setup
 
 The Discord widget requires an image with alt text containing your Discord Server ID, as well as enabling the widget from your Discord server settings. The alt text must start with “GlimeshWidgets” exactly, the discord ID must be prepended with “discord=”, and all entries must be delimited by an comma.
 
-- For example, `GlimeshWidgets,discord=IDHERE,style=light`
+- For example, `GlimeshWidgets,discord=DISCORD ID HERE,style=light`
 - You may also notice that you customize widgets here as well, the `style` parameter allows you to style your widgets, though only dark and light is currently supported.
 
 To setup the Discord widget, copy/paste this one of these codes into your channel description:
@@ -31,6 +33,23 @@ To get the ID, go to your Discord server settings, go down to Widget, turn on �
 
 The image doesn’t have to be the images we provide, it can be any image, though I recommend one of two above.
 
+#### Google Calendar Setup
+
+You may also display a Public Google Calendar widget. Like with the Discord widget, you must add the calendar ID to the image alt text.
+
+- For example, `GlimeshWidgets,discord=DISCORD ID HERE,calendar=CALENDER ID HERE,style=light`
+
+To get a public calendar ID, first, you’ll need a dedicated Google calendar:
+
+- You should create a new Google account that is NOT associated with any personal details.
+- Head to https://caledar.google.com, (login if needed), and click the cog wheel at the top-right, then click Settings.
+- On the right, click Add Calendar, and then Create New Calendar. Enter a name for this calendar, something like “Streaming Schedule”
+- When the Calendar has been created, click on it on the right side, then click on Integrate Calendar.
+- Copy the Calendar ID.
+- In your Glimesh profile, update the image alt text (see Discord Widget Setup above) with the Calendar ID by adding `calendar=ID` at the end.
+	- The final image should look something like this, minus the “ID HERE” idiom:
+	- `[![GlimeshWidgets,discord=DISCORD ID HERE,calendar=CALENDAR ID HERE,style=dark](https://img.shields.io/static/v1?label=Glimesh+Widgets&message=install&color=brightgreen&labelColor=white&style=flat](https://github.com/NicholasDJM/Glimesh-Widgets)`
+
 ## Adblockers
 
 You may find that the Twitter widget doesn’t load, and only says “Tweets by…”, check to make sure your adblocker isn’t blocking Twitter. For Firefox users, make sure the built-in tracker protection is turned off: At the beginning of the address bar is a shield icon, click that and turn off tracking protection.
@@ -44,12 +63,13 @@ You may want to take a look at [Social](https://shields.io/category/social) and 
 ## Todo
 
 - CRITICAL: Add support for style option
-- CRITICAL: Finish settings panel
-	- Partially complete: Global settings now function.
-- CRITICAL: Sanitize image alt text before accepting it.
-  - Also sanitize all other potential injection points.
-- Create Google calendar widget
 - Add other platform widgets that are supported by Glimesh
   - Including Instagram, YouTube, Guilded, and Streamloots
-- Add to settings panel: per channel enable/disable
 - Create Chrome and Firefox extensions.
+
+## Done
+
+- Settings panel is now complete. Widgets can be enabled/disabled on a per channel basis.
+- Google Calendar widget has been added.
+- Most input has been sanitized, though this hasn’t been tested throughor
+
