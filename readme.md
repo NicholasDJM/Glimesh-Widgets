@@ -10,7 +10,7 @@ This Tampermonkey script is used to add widgets to channels on https://glimesh.t
 
 Currently has support for Twitter, Discord, and Google Calendar widgets. Twitter works out-of-the-box, you only need to connect your Twitter account to your Glimesh Account.
 
-#### Discord Widget and Setup
+#### Discord Widget Setup
 
 The Discord widget requires an image with alt text containing your Discord Server ID, as well as enabling the widget from your Discord server settings. The alt text must start with “GlimeshWidgets” exactly, the discord ID must be prepended with “discord=”, and all entries must be delimited by an comma.
 
