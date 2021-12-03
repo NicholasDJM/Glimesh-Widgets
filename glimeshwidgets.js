@@ -18,6 +18,7 @@
 // @exclude      https://glimesh.tv/s/*
 // @icon         https://icons.duckduckgo.com/ip2/glimesh.tv.ico
 // @require      https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js#sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=
+// @require      https://cdn.jsdelivr.net/npm/sweetalert2@11.2.2/dist/sweetalert2.all.min.js#sha256-OABKrwmx1gTjF5bLHbyKuTMHOd+fD76gQavBCJZLD3c=
 // @grant        GM_info
 // @grant        GM_log
 // @grant        GM_registerMenuCommand
@@ -27,7 +28,7 @@
 // @grant        GM_addStyle
 // @noframes
 // ==/UserScript==
-/* global $, jQuery */
+/* global $, jQuery, Swal */
 
 // ====================================================== //
 // ====================== Variables ===================== //
@@ -91,7 +92,7 @@ function createWidget(type) {
 		let data = tag.attr("alt").split("calendar=")[1];
 		if (data.length > 0){
 			data = data.split(",")[0];
-			if (/[\da-z]+@group.calendar.google.com/g.test(data)) {
+			if (/[\da-z]+@group.calendar.google.com/gi.test(data)) {
 				log("Google Calendar ID: " + data);
 				createCard(container).append($(`<iframe src="https://calendar.google.com/calendar/embed?height=${height}&wkst=1&bgcolor=%23${theme == "dark" ? "0E1726" : "FFFFFF"}&ctz=America%2FToronto&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=AGENDA&src=${data}&color=%23039BE5" style="border-width:0" width="${width}" height="${height}" frameborder="0" scrolling="no"></iframe>`));
 				log("Created Calendar Widget");
@@ -120,15 +121,17 @@ function createMenu() {
 			return `<input id="widget-${( global ? "global-" : "") + key.toLowerCase()}" type="checkbox"${GM_getValue((global ? "global" : name) + key, true) ? " checked" : ""}></input><label class="widget-setting-label" for="widget-${(global ? "global-" : "") + key.toLowerCase()}">${key}</label><br>`;
 		},
 		menu = $(`<div id="widget-menu">
-	<h6>Glimesh Widgets Settings</h6>
-	<a href="https://www.github.com/NicholasDJM/Glimesh-Widgets">Github</a><br>
+	<h5>Glimesh Widgets Settings</h5>
+	<a href="https://www.github.com/NicholasDJM/Glimesh-Widgets" target="_blank" title="Opens in a new tab">Github</a><br>
 	<br>
 	<h6>Global Settings</h6>
+	<a id="widget-global-reset" href="#">Reset global settings</a><br>
 	${input("Enable") +
 	input("Twitter") +
 	input("Discord") +
 	input("Calendar")}
 	<h6>Channel Settings for ${name}</h6>
+	<a id="widget-channel-reset" href="#">Reset channel settings</a><br>
 	${input("Enable", false) +
 	input("Twitter", false) +
 	input("Discord", false) +
@@ -148,16 +151,18 @@ function createMenu() {
 	settingsButton.click(menuToggle);
 	$("#widget-revert-settings").click(menuRevert);
 	$("#widget-save-settings").click(menuSave);
+	$("#widget-channel-reset").click(menuDelete);
+	$("#widget-global-reset").click(menuDeleteGlobal);
 	log("Created settings menu!");
 }
 
 function addStyle() {
 	return GM_addStyle(`#widget-menu {
 	position:fixed;
-	top:15px;
+	top:80px;
 	left:0;
 	right:0;
-	z-index:123456791;
+	z-index:1000000;
 	border-radius:.25rem;
 	margin:auto;
 	min-width:400px;
@@ -176,11 +181,14 @@ function addStyle() {
 	width:100%;
 	height:100%;
 	background-color:rgba(0,0,0,0.25%);
-	z-index:123456790;
+	z-index:999999;
 	display:none;
 }
 .widget-setting-label {
 	padding-left:5px;
+}
+.swal2-title {
+	color: #FFFFFF
 }`);
 }
 
@@ -196,7 +204,7 @@ function menuRevert() {
 	$("#widget-global-calendar").prop("checked", GM_getValue("globalCalendar", true));
 	$("#widget-enable").prop("checked", GM_getValue(name + "Enable", true));
 	$("#widget-twitter").prop("checked", GM_getValue(name + "Twitter", true));
-	$("#widget-discord").prop("checked", GM_getValue(name + "discord", true));
+	$("#widget-discord").prop("checked", GM_getValue(name + "Discord", true));
 	$("#widget-calendar").prop("checked", GM_getValue(name + "Calendar", true));
 	menuToggle();
 }
@@ -213,6 +221,57 @@ function menuSave() {
 	GM_setValue(name + "Discord", $("#widget-discord").prop("checked"));
 	GM_setValue(name + "Calendar", $("#widget-calendar").prop("checked"));
 	menuToggle();
+}
+
+function menuDelete() {
+	const {name} = variables();
+	menuToggle();
+	Swal.fire({
+		title: `Reset settings for the channel ${name}?`,
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#007bff",
+		cancelButtonColor: "#dc3545",
+		confirmButtonText: "Yes, reset settings.",
+		background: "#1b2e4b"
+	}).then((result) => {
+		if (result.isConfirmed) {
+			GM_deleteValue(name + "Enable");
+			GM_deleteValue(name + "Twitter");
+			GM_deleteValue(name + "Discord");
+			GM_deleteValue(name + "Calendar");
+			log("Reset channel settings");
+			menuRevert();
+			menuToggle();
+		} else if (result.isDismissed) {
+			menuToggle();
+		}
+	});
+}
+
+function menuDeleteGlobal() {
+	menuToggle();
+	Swal.fire({
+		title: "Reset global widget settings?",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#007bff",
+		cancelButtonColor: "#dc3545",
+		confirmButtonText: "Yes, reset settings.",
+		background: "#1b2e4b"
+	}).then((result) => {
+		if (result.isConfirmed) {
+			GM_deleteValue("globalEnable");
+			GM_deleteValue("globalTwitter");
+			GM_deleteValue("globalDiscord");
+			GM_deleteValue("globalCalendar");
+			log("Reset global settings");
+			menuRevert();
+			menuToggle();
+		} else if (result.isDismissed) {
+			menuToggle();
+		}
+	});
 }
 
 // ====================================================== //
