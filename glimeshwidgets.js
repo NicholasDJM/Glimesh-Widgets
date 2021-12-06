@@ -230,8 +230,8 @@ function menuDelete() {
 		title: `Reset settings for the channel ${name}?`,
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#007bff",
-		cancelButtonColor: "#dc3545",
+		confirmButtonColor: "#dc3545",
+		cancelButtonColor: "#007bff",
 		confirmButtonText: "Yes, reset settings.",
 		background: "#1b2e4b"
 	}).then((result) => {
@@ -255,8 +255,8 @@ function menuDeleteGlobal() {
 		title: "Reset global widget settings?",
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#007bff",
-		cancelButtonColor: "#dc3545",
+		confirmButtonColor: "#dc3545",
+		cancelButtonColor: "#007bff",
 		confirmButtonText: "Yes, reset settings.",
 		background: "#1b2e4b"
 	}).then((result) => {
