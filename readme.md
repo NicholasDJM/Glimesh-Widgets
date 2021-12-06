@@ -71,5 +71,5 @@ You may want to take a look at [Social](https://shields.io/category/social) and 
 
 - Settings panel is now complete. Widgets can be enabled/disabled on a per channel basis.
 - Google Calendar widget has been added.
-- Most input has been sanitized, though this hasn’t been tested throughor
+- Most input has been sanitized, though this hasn’t been tested thoroughly.
 
