@@ -42,7 +42,7 @@ You may also display a Public Google Calendar widget. Like with the Discord widg
 To get a public calendar ID, first, you’ll need a dedicated Google calendar:
 
 - You should create a new Google account that is NOT associated with any personal details.
-- Head to https://caledar.google.com, (login if needed), and click the cog wheel at the top-right, then click Settings.
+- Head to https://calendar.google.com, (login if needed), and click the cog wheel at the top-right, then click Settings.
 - On the right, click Add Calendar, and then Create New Calendar. Enter a name for this calendar, something like “Streaming Schedule”
 - When the Calendar has been created, click on it on the right side, then click on Integrate Calendar.
 - Copy the Calendar ID.
